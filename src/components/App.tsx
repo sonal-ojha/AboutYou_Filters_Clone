@@ -18,11 +18,11 @@ const App = () => {
   
   const products = useProductLoader(filteredByColors, filteredByPattern);
 
-  const handleFilterByColor = (id) => {
+  const handleFilterByColor = (id: number) => {
     setFilteredByColors(filterByTypes(filteredByColors, id));
   };
 
-  const handleFilterByPattern = (id) => {
+  const handleFilterByPattern = (id: number) => {
     setFilteredByPattern(filterByTypes(filteredByPattern, id));
   };
 
