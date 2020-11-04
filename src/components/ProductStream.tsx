@@ -8,13 +8,16 @@ interface Props {
 }
 
 const ProductStream: FC<Props> = ({ products }) => {
-  return (
-    <Wrapper>
-      {products.map(product => (
-        <ProductTile key={product.id} {...product} />
-      ))}
-    </Wrapper>
-  );
+  if (!!products && products.length > 0) {
+    return (
+      <Wrapper>
+        {products.map(product => (
+          <ProductTile key={product.id} {...product} />
+        ))}
+      </Wrapper>
+    );
+  }
+  return <NotFoundWrapper>Sorry, No Products Found</NotFoundWrapper>;
 };
 
 const Wrapper = styled.div`
@@ -31,6 +34,13 @@ const Wrapper = styled.div`
       width: 25%;
     }
   }
+`;
+
+const NotFoundWrapper = styled.div`
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-top: 10%;
 `;
 
 export default ProductStream;

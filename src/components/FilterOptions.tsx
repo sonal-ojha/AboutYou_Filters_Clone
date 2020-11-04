@@ -1,8 +1,9 @@
-import React from 'react';
-import Checkbox from './common/Checkbox';
-import styled from 'styled-components';
+import React from "react";
+import Checkbox from "./common/Checkbox";
+import styled from "styled-components";
 
-import { getfilterTypes } from '../utils/filters';
+import { FiltereOptionsProps } from '../types/Product';
+import { getfilterTypes } from "../utils/filters";
 
 function FilterTypes({ data, overrideColors, selections, setSelections }) {
   return (
@@ -22,7 +23,15 @@ function FilterTypes({ data, overrideColors, selections, setSelections }) {
   );
 }
 
-function FilterOptions({ onCloseClick, data, filteredByColors, setFilteredByColors, filteredByPattern, setFilteredByPattern }) {
+const FilterOptions = ({
+  onCloseClick,
+  data,
+  filteredByColors,
+  setFilteredByColors,
+  filteredByPattern,
+  setFilteredByPattern,
+  onClearClick,
+}: FiltereOptionsProps) => {
   const { color, pattern } = getfilterTypes(data);
   return (
     <Modal>
@@ -34,15 +43,26 @@ function FilterOptions({ onCloseClick, data, filteredByColors, setFilteredByColo
         <AllFilters>
           <FilterHeader>Colors</FilterHeader>
           <FilterTypeWrapper>
-            <FilterTypes data={color} overrideColors={true} selections={filteredByColors} setSelections={setFilteredByColors} />
+            <FilterTypes
+              data={color}
+              overrideColors={true}
+              selections={filteredByColors}
+              setSelections={setFilteredByColors}
+            />
           </FilterTypeWrapper>
           <FilterHeader>Patterns</FilterHeader>
           <FilterTypeWrapper>
-            <FilterTypes data={pattern} overrideColors={false} selections={filteredByPattern} setSelections={setFilteredByPattern} />
+            <FilterTypes
+              data={pattern}
+              overrideColors={false}
+              selections={filteredByPattern}
+              setSelections={setFilteredByPattern}
+            />
           </FilterTypeWrapper>
         </AllFilters>
         <Footer>
-          <SubmitButton onClick={onCloseClick}>Submit</SubmitButton>
+          <Button onClick={onCloseClick}>Submit</Button>
+          <Button onClick={onClearClick}>Clear</Button>
         </Footer>
       </Wrapper>
     </Modal>
@@ -100,11 +120,23 @@ const CloseButton = styled.button`
   cursor: pointer;
   background-color: #fff;
   font-size: 16px;
+  &:hover {
+    background: black;
+    color: #fff;
+    border: 1px solid black;
+  }
 `;
 
-const SubmitButton = styled(CloseButton)`
+const Button = styled(CloseButton)`
   width: 130px;
   border: 1px solid rgb(229, 229, 229);
+  border-radius: 0.3;
+  font-size: 14px;
+  &:hover {
+    background: black;
+    color: #fff;
+    border: 1px solid black;
+  }
 `;
 
 const AllFilters = styled.div`

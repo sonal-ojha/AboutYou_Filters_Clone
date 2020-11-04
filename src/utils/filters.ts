@@ -3,8 +3,11 @@ const filterValues = (data: any[], filterType: string) => {
   return filters[0].values;
 };
 
-export const getfilterTypes = (data: any[]) => {
-  let result: { color: any[], pattern: any[] } | {} = {};
+export const getfilterTypes = (data: any[]): { color: any[], pattern: any[] } => {
+  let result = {
+    color: [],
+    pattern: [],
+  };
   if (!!data && data.length > 0) {
     result.color = filterValues(data, 'color');
     result.pattern = filterValues(data, 'pattern');
@@ -12,13 +15,13 @@ export const getfilterTypes = (data: any[]) => {
   return result;
 };
 
-export const filterByTypes = (filterArray: any[] ,data: number) => {
+export const filterByTypes = (filterArray: any[], data: number) => {
   const filterIndex = filterArray.findIndex(type => type === data);
   let filteredData = [...filterArray];
   if (filterIndex !== -1) { // Remove filter selection
     filteredData.splice(filterIndex, 1);
   } else { // Apply filter
-    filteredData.push(data); 
+    filteredData.push(data);
   }
   return filteredData;
 }

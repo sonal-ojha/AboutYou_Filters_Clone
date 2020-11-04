@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 import { allColors } from './constant';
 
-const Checkbox = ({ className, checked, overrideColors, ...props }) => (
+import { CheckboxProps, StyledCheckboxProps } from '../../types/Checkbox';
+
+const Checkbox: FC<CheckboxProps> = ({ className, checked, overrideColors, name, ...props }) => (
   <CheckboxContainer className={className}>
     <HiddenCheckbox checked={checked} {...props} />
     <StyledCheckbox checked={checked} name={name} overrideColors={overrideColors}>
-      <Icon viewBox="0 0 24 24">
+      <Icon viewBox="0 0 24 24" name={name}>
         <polyline points="20 6 9 17 4 12" />
       </Icon>
     </StyledCheckbox>
@@ -18,10 +20,11 @@ const CheckboxContainer = styled.div`
   vertical-align: middle;
 `;
 
-const Icon = styled.svg`
+const Icon = styled.svg<{ name: string }>`
   fill: none;
-  stroke: white;
+  stroke: black;
   stroke-width: 2px;
+  stroke: ${props => (props.name === 'schwarz' || props.name === 'blau' ? '#fff' : 'black' )};
 `;
 
 const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
@@ -37,15 +40,14 @@ const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
   width: 1px;
 `;
 
-const StyledCheckbox = styled.div`
+const StyledCheckbox = styled.div<StyledCheckboxProps>`
   display: inline-block;
   width: 16px;
   height: 16px;
-  background: ${props => (props.checked ? '#181818' : '#fff')};
-  /* background: ${props => (props.overrideColors ? allColors[props.name] : '#fff')}; */
+  background: ${props => (props.overrideColors ? allColors[props.name] : '#fff')};
   border-radius: 3px;
   transition: all 150ms;
-  color: #181818;
+  color: black;
   border: 0.5px solid #181818;
 
   ${Icon} {
